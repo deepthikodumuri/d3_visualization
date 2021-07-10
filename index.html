@@ -13,9 +13,20 @@
   pointer-events: all;
 }
 
+#container {
+  overflow-y: scroll;
+  height: 300px;
+}
+#chart {
+  overflow: hidden;
+  height: 600px;
+  width: 400px;
+}
+
 </style>
-<svg width="960" height="500"></svg>
+<svg width="860" height="500"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
+<div id="container"><div id="chart">
 <script>
 
 var svg = d3.select("svg"),
@@ -37,7 +48,7 @@ var xscale = d3.scaleLinear()
 
 var xAxis = d3.axisBottom(x).scale(xscale).ticks(10),
     xAxis2 = d3.axisBottom(x2).scale(xscale).ticks(10),
-    yAxis = d3.axisLeft(y).scale(xscale).ticks(20);
+    yAxis = d3.axisLeft(y).scale(xscale).ticks(15);
 
 
 var brush = d3.brushX()
@@ -77,6 +88,19 @@ var zoom = d3.zoom()
         .attr("class", "focus")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+var svg = d3.select("#chart")
+  .append("svg")
+  .attr("width", "100%")
+  .attr("height", "100%")
+  .call(d3.zoom().on("zoom", function () {
+    if (d3.event.sourceEvent.ctrlKey) {
+      svg.attr("transform", d3.event.transform);
+    } else {
+      
+    }
+    
+  }))
+  .append("g");
 var context = svg.append("g")
     .attr("class", "context")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
@@ -157,4 +181,4 @@ function type(d) {
   return d;
 }
 
-</script>
+</script></div></div>
